@@ -89,33 +89,33 @@ This document provides a dependency-ordered task list for implementing the Intel
 
 ### Database Models (Blocking Prerequisites)
 
-- [ ] T030 Create User model in /backend/src/models/user.py
-- [ ] T031 [P] Create HealthMetrics model in /backend/src/models/health_metrics.py
-- [ ] T032 [P] Create Workout model in /backend/src/models/workout.py
-- [ ] T033 [P] Create RecoveryScore model in /backend/src/models/recovery_score.py
-- [ ] T034 [P] Create WorkoutRecommendation model in /backend/src/models/workout_recommendation.py
-- [ ] T035 [P] Create Insight model in /backend/src/models/insight.py
-- [ ] T036 [P] Create Goal model in /backend/src/models/goal.py
-- [ ] T037 [P] Create TrainingPlan model in /backend/src/models/training_plan.py
-- [ ] T038 [P] Create PlannedWorkout model in /backend/src/models/planned_workout.py
-- [ ] T039 Generate initial Alembic migration for all models in /backend/alembic/versions/
-- [ ] T040 Apply migration to development database
+- [X] T030 Create User model in /backend/src/models/user.py
+- [X] T031 [P] Create HealthMetrics model in /backend/src/models/health_metrics.py
+- [X] T032 [P] Create Workout model in /backend/src/models/workout.py
+- [X] T033 [P] Create RecoveryScore model in /backend/src/models/recovery_score.py
+- [X] T034 [P] Create WorkoutRecommendation model in /backend/src/models/workout_recommendation.py
+- [X] T035 [P] Create Insight model in /backend/src/models/insight.py
+- [X] T036 [P] Create Goal model in /backend/src/models/goal.py
+- [X] T037 [P] Create TrainingPlan model in /backend/src/models/training_plan.py
+- [X] T038 [P] Create PlannedWorkout model in /backend/src/models/planned_workout.py
+- [X] T039 Generate initial Alembic migration for all models in /backend/alembic/versions/
+- [X] T040 Apply migration to development database
 
 ### Authentication System
 
-- [ ] T041 Write unit tests for User model validation in /backend/tests/unit/test_user_model.py
-- [ ] T042 Write unit tests for JWT token generation in /backend/tests/unit/test_auth.py
-- [ ] T043 Implement JWT token service in /backend/src/services/auth/jwt_service.py
-- [ ] T044 Create user registration endpoint in /backend/src/api/routes/auth.py
-- [ ] T045 Create user login endpoint in /backend/src/api/routes/auth.py
-- [ ] T046 Write contract tests for auth endpoints in /backend/tests/contract/test_auth_api.py
+- [X] T041 Write unit tests for User model validation in /backend/tests/unit/test_user_model.py
+- [X] T042 Write unit tests for JWT token generation in /backend/tests/unit/test_jwt_service.py
+- [X] T043 Implement JWT token service in /backend/src/services/jwt_service.py
+- [X] T044 Create user registration endpoint in /backend/src/api/routes/auth.py
+- [X] T045 Create user login endpoint in /backend/src/api/routes/auth.py
+- [X] T046 Write contract tests for auth endpoints in /backend/tests/contract/test_auth_endpoints.py
 
 ### Base Services & Utilities
 
-- [ ] T047 [P] Create cache service wrapper for Redis in /backend/src/services/cache_service.py
-- [ ] T048 [P] Create encryption utility for tokens in /backend/src/utils/encryption.py
-- [ ] T049 [P] Create date/time utilities in /backend/src/utils/datetime.py
-- [ ] T050 [P] Create validation utilities in /backend/src/utils/validation.py
+- [X] T047 [P] Create cache service wrapper for Redis in /backend/src/database/redis.py (already configured)
+- [X] T048 [P] Create encryption utility for tokens in /backend/src/utils/encryption.py
+- [X] T049 [P] Create date/time utilities in /backend/src/utils/datetime.py
+- [X] T050 [P] Create validation utilities in /backend/src/utils/validation.py
 
 ---
 

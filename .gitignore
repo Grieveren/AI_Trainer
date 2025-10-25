@@ -63,7 +63,11 @@ logs/
 
 # AI/ML specific
 *.h5
-models/
+*.pkl
+*.pth
+*.onnx
+saved_models/
+ml_models/
 checkpoints/
 data/cache/
 
