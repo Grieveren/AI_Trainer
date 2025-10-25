@@ -11,6 +11,19 @@ from alembic import context
 # Import Base to get metadata
 from src.database.connection import Base
 
+# Import all models so they are registered with Base.metadata
+from src.models import (  # noqa: F401
+    User,
+    HealthMetrics,
+    Workout,
+    RecoveryScore,
+    WorkoutRecommendation,
+    Insight,
+    Goal,
+    TrainingPlan,
+    PlannedWorkout,
+)
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

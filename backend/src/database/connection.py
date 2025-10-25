@@ -48,3 +48,7 @@ async def get_db() -> AsyncSession:
             raise
         finally:
             await session.close()
+
+
+# Alias for consistency with route code
+get_async_session = get_db
