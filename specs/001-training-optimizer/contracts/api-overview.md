@@ -1,0 +1,159 @@
+# API Contracts Overview
+
+**Feature**: 001-training-optimizer
+**Date**: 2025-10-24
+**API Version**: v1
+**Base URL**: `/api/v1`
+
+## API Design Principles
+
+1. **RESTful Design**: Resources accessed via standard HTTP methods (GET, POST, PUT, DELETE)
+2. **JSON Payloads**: All requests and responses use JSON content-type
+3. **Authentication**: JWT Bearer tokens in Authorization header
+4. **Error Responses**: Consistent error structure across all endpoints
+5. **Pagination**: List endpoints support offset/limit pagination
+6. **Idempotency**: POST/PUT requests include idempotency keys for safety
+7. **Versioning**: API versioned via URL path (`/api/v1/`)
+
+## Authentication
+
+All endpoints require JWT authentication unless explicitly marked as public.
+
+**Header**:
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Token Payload**:
+```json
+{
+  "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "email": "user@example.com",
+  "exp": 1730345600
+}
+```
+
+## Standard Error Response
+
+```json
+{
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "Recovery score not found for date 2025-10-23",
+    "details": {
+      "date": "2025-10-23",
+      "user_id": "550e8400-e29b-41d4-a716-446655440000"
+    },
+    "timestamp": "2025-10-24T10:30:00Z"
+  }
+}
+```
+
+**Error Codes**:
+- `UNAUTHORIZED`: Missing or invalid authentication token
+- `FORBIDDEN`: User lacks permission for this resource
+- `RESOURCE_NOT_FOUND`: Requested resource does not exist
+- `VALIDATION_ERROR`: Request body fails validation
+- `GARMIN_API_ERROR`: Garmin API integration failure
+- `AI_SERVICE_ERROR`: Claude AI integration failure
+- `INTERNAL_SERVER_ERROR`: Unexpected server error
+
+## Endpoint Categories
+
+### User Management
+- `POST /auth/register` - Create new user account
+- `POST /auth/login` - Authenticate and receive JWT token
+- `GET /users/me` - Get current user profile
+- `PUT /users/me` - Update user profile
+
+### Garmin Integration
+- `POST /garmin/authorize` - Initiate OAuth flow
+- `GET /garmin/callback` - OAuth callback handler
+- `POST /garmin/sync` - Trigger manual data sync
+- `GET /garmin/sync/status` - Check sync job status
+- `DELETE /garmin/disconnect` - Revoke Garmin connection
+
+### Health Metrics
+- `GET /health-metrics` - List health metrics for date range
+- `GET /health-metrics/{date}` - Get metrics for specific date
+
+### Workouts
+- `GET /workouts` - List workouts for date range
+- `GET /workouts/{id}` - Get specific workout details
+- `POST /workouts` - Manually log a workout
+- `PUT /workouts/{id}` - Update workout details
+- `DELETE /workouts/{id}` - Delete workout
+
+### Recovery & Recommendations (User Story 1 - P1)
+- `GET /recovery/{date}` - Get recovery score and recommendation
+- `GET /recovery/today` - Convenience endpoint for current day
+- `POST /recovery/{date}/recalculate` - Force recalculation
+
+### AI Insights (User Story 2 - P2)
+- `GET /insights` - List recent insights
+- `GET /insights/{id}` - Get specific insight details
+- `POST /insights/generate` - Trigger new insight generation
+- `POST /insights/{id}/feedback` - Provide feedback (useful/not useful)
+
+### Training Plans (User Story 3 - P3)
+- `GET /training-plans` - List user's training plans
+- `GET /training-plans/{id}` - Get plan details with workouts
+- `POST /training-plans` - Generate new training plan
+- `PUT /training-plans/{id}` - Update plan (manual adjustments)
+- `DELETE /training-plans/{id}` - Cancel plan
+- `GET /training-plans/{id}/progress` - Get plan progress stats
+
+### Goals (User Story 4 - P4)
+- `GET /goals` - List user's goals
+- `GET /goals/{id}` - Get goal details with progress
+- `POST /goals` - Create new goal
+- `PUT /goals/{id}` - Update goal
+- `DELETE /goals/{id}` - Delete goal
+- `POST /goals/{id}/achieve` - Mark goal as achieved
+
+## Rate Limiting
+
+- **Authenticated Users**: 100 requests per minute
+- **Unauthenticated**: 10 requests per minute
+- **Rate Limit Headers**:
+  ```
+  X-RateLimit-Limit: 100
+  X-RateLimit-Remaining: 87
+  X-RateLimit-Reset: 1730345600
+  ```
+
+## Pagination
+
+List endpoints support pagination via query parameters:
+
+**Query Parameters**:
+- `limit` (optional): Number of results per page (default: 50, max: 100)
+- `offset` (optional): Number of results to skip (default: 0)
+
+**Response**:
+```json
+{
+  "data": [...],
+  "pagination": {
+    "total": 365,
+    "limit": 50,
+    "offset": 0,
+    "has_more": true
+  }
+}
+```
+
+## Contract Files
+
+Detailed contract specifications for each endpoint:
+- [auth-api.md](./auth-api.md) - Authentication endpoints
+- [garmin-api.md](./garmin-api.md) - Garmin integration endpoints
+- [recovery-api.md](./recovery-api.md) - Recovery and recommendations (P1)
+- [insights-api.md](./insights-api.md) - AI insights (P2)
+- [training-plans-api.md](./training-plans-api.md) - Training plans (P3)
+- [goals-api.md](./goals-api.md) - Goals tracking (P4)
+- [workouts-api.md](./workouts-api.md) - Workout management
+
+## OpenAPI/Swagger
+
+Full OpenAPI 3.1 specification will be auto-generated by FastAPI at `/docs` endpoint.
