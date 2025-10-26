@@ -1,10 +1,18 @@
 """FastAPI application entry point."""
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from src.api.routes import auth, garmin, recovery
-from src.database.connection import engine
+# Load environment variables before other imports
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Standard library and third-party imports
+from fastapi import FastAPI  # noqa: E402
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+
+# Local application imports
+from src.api.routes import auth, garmin, recovery  # noqa: E402
+from src.database.connection import engine  # noqa: E402
 
 
 @asynccontextmanager

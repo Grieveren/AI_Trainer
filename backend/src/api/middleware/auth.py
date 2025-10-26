@@ -3,7 +3,7 @@
 import os
 from typing import Optional
 
-from jose import jwt
+from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
@@ -69,9 +69,7 @@ class JWTBearer(HTTPBearer):
         try:
             jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return True
-        except jwt.ExpiredSignatureError:
-            return False
-        except jwt.InvalidTokenError:
+        except JWTError:
             return False
 
     def decode_jwt(self, token: str) -> Optional[dict]:
@@ -127,7 +125,8 @@ def get_current_user(
             detail="Invalid authentication credentials",
         )
 
-    user_id = payload.get("user_id")
+    # Get user ID from 'sub' field (standard JWT) or fall back to 'user_id'
+    user_id = payload.get("sub") or payload.get("user_id")
     if not user_id:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

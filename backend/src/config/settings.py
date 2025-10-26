@@ -34,8 +34,8 @@ class Settings(BaseSettings):
     jwt_refresh_token_expire_days: int = 7
 
     # Garmin OAuth
-    garmin_consumer_key: Optional[str] = None
-    garmin_consumer_secret: Optional[str] = None
+    garmin_client_id: Optional[str] = None
+    garmin_client_secret: Optional[str] = None
     garmin_callback_url: str = "http://localhost:8000/api/v1/garmin/callback"
 
     # Celery

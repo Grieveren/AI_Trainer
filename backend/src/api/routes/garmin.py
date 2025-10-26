@@ -28,9 +28,9 @@ router = APIRouter()
 def get_oauth_service() -> GarminOAuthService:
     """Dependency for Garmin OAuth service."""
     return GarminOAuthService(
-        client_id=settings.GARMIN_CLIENT_ID,
-        client_secret=settings.GARMIN_CLIENT_SECRET,
-        redirect_uri=settings.GARMIN_CALLBACK_URL,
+        client_id=settings.garmin_client_id,
+        client_secret=settings.garmin_client_secret,
+        redirect_uri=settings.garmin_callback_url,
     )
 
 
