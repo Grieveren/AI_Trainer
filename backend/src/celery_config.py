@@ -15,7 +15,7 @@ beat_schedule = {
     },
     # Daily recovery score calculation at 6:30 AM UTC (after Garmin sync)
     "calculate-daily-recovery": {
-        "task": "ai_trainer.jobs.calculate_recovery.calculate_all_users",
+        "task": "calculate_all_users_recovery_scores",
         "schedule": crontab(hour=6, minute=30),
         "options": {
             "queue": "recovery",

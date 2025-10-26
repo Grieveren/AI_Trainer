@@ -2,21 +2,32 @@
 
 import asyncio
 from typing import AsyncGenerator, Generator
+from unittest.mock import Mock
 
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient
-from redis.asyncio import Redis
+from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import NullPool
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.pool import NullPool, StaticPool
 
-from src.database.connection import Base, get_db
-from src.database.redis import RedisClient
-from src.main import app
+from src.database.connection import Base, get_db, get_sync_db_session
 
-# Test database URL (use separate test database)
-TEST_DATABASE_URL = (
+try:
+    from redis.asyncio import Redis
+    from src.database.redis import RedisClient
+
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
+
+# Test database URL (use in-memory SQLite for unit tests)
+TEST_DATABASE_URL_SQLITE = "sqlite:///:memory:"
+TEST_DATABASE_URL_ASYNC_SQLITE = "sqlite+aiosqlite:///:memory:"
+
+# Use PostgreSQL for integration tests if available
+TEST_DATABASE_URL_POSTGRES = (
     "postgresql+asyncpg://postgres:postgres@localhost:5432/aitrainer_test"
 )
 TEST_REDIS_URL = "redis://localhost:6379/1"  # Use database 1 for tests
@@ -71,6 +82,10 @@ async def test_db_session(
 @pytest_asyncio.fixture(scope="function")
 async def test_redis_client() -> AsyncGenerator[Redis, None]:
     """Create test Redis client."""
+    if not REDIS_AVAILABLE:
+        yield Mock()  # Mock Redis if not available
+        return
+
     client = RedisClient()
     client._redis_url = TEST_REDIS_URL
     await client.connect()
@@ -80,6 +95,67 @@ async def test_redis_client() -> AsyncGenerator[Redis, None]:
     # Clear test database
     await client.client.flushdb()
     await client.disconnect()
+
+
+# Synchronous fixtures for unit/integration tests
+
+
+@pytest.fixture(scope="function")
+def db_engine():
+    """Create synchronous test database engine (SQLite in-memory)."""
+    engine = create_engine(
+        TEST_DATABASE_URL_SQLITE,
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+        echo=False,
+    )
+
+    # Create all tables
+    Base.metadata.create_all(bind=engine)
+
+    yield engine
+
+    # Drop all tables
+    Base.metadata.drop_all(bind=engine)
+    engine.dispose()
+
+
+@pytest.fixture(scope="function")
+def db_session(db_engine) -> Generator[Session, None, None]:
+    """Create synchronous test database session."""
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
+    session = SessionLocal()
+
+    yield session
+
+    session.rollback()
+    session.close()
+
+
+@pytest.fixture
+def client(db_session):
+    """Create test HTTP client."""
+    from fastapi.testclient import TestClient
+    from src.main import app
+
+    def override_get_db():
+        try:
+            yield db_session
+        finally:
+            pass
+
+    app.dependency_overrides[get_sync_db_session] = override_get_db
+
+    with TestClient(app) as test_client:
+        yield test_client
+
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def auth_headers():
+    """Mock authentication headers."""
+    return {"Authorization": "Bearer mock_token"}
 
 
 @pytest_asyncio.fixture(scope="function")
