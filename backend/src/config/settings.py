@@ -21,7 +21,7 @@ class Settings(BaseSettings):
 
     # Database
     database_url: str = (
-        "postgresql+asyncpg://aitrainer:devpassword@localhost:5433/aitrainer"
+        "postgresql+asyncpg://postgres:postgres@localhost:5433/aitrainer"
     )
 
     # Redis

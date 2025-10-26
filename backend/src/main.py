@@ -4,15 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from src.api.routes import auth, garmin, recovery
-from src.database.connection import engine, Base
+from src.database.connection import engine
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
-    # Startup: Create database tables
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Startup: Tables are created via Alembic migrations
+    # No need to create them here
 
     yield
 
@@ -32,7 +31,10 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite default port
+    allow_origins=[
+        "http://localhost:5173",  # Vite default port
+        "http://localhost:5176",  # Vite alternative port
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
