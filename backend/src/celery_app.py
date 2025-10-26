@@ -41,6 +41,6 @@ celery_app.conf.update(
 
 # Auto-discover tasks in jobs directory
 celery_app.autodiscover_tasks(
-    ["ai_trainer.jobs"],
+    ["src.jobs"],
     force=True,
 )

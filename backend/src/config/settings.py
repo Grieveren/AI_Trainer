@@ -58,3 +58,7 @@ def get_settings() -> Settings:
         Settings: Application settings
     """
     return Settings()
+
+
+# Global settings instance for easy import
+settings = get_settings()

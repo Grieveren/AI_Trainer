@@ -137,94 +137,94 @@ This document provides a dependency-ordered task list for implementing the Intel
 ### Garmin Integration (US1)
 
 **Tests First (TDD Red Phase)**:
-- [ ] T051 [P] [US1] Write contract tests for Garmin API client in /backend/tests/contract/test_garmin_api.py
-- [ ] T052 [P] [US1] Write unit tests for OAuth2 PKCE flow in /backend/tests/unit/test_garmin_oauth.py
-- [ ] T053 [P] [US1] Write unit tests for health metrics parsing in /backend/tests/unit/test_garmin_parser.py
+- [X] T051 [P] [US1] Write contract tests for Garmin API client in /backend/tests/contract/test_garmin_api.py
+- [X] T052 [P] [US1] Write unit tests for OAuth2 PKCE flow in /backend/tests/unit/test_garmin_oauth.py
+- [X] T053 [P] [US1] Write unit tests for health metrics parsing in /backend/tests/unit/test_garmin_parser.py
 
 **Implementation (TDD Green Phase)**:
-- [ ] T054 [US1] Implement Garmin OAuth2 PKCE flow in /backend/src/services/garmin/oauth_service.py
-- [ ] T055 [US1] Implement Garmin API client with python-garminconnect in /backend/src/services/garmin/client.py
-- [ ] T056 [US1] Implement health metrics fetching in /backend/src/services/garmin/health_service.py
-- [ ] T057 [US1] Implement workout fetching in /backend/src/services/garmin/workout_service.py
-- [ ] T058 [US1] Create Garmin authorization endpoints in /backend/src/api/routes/garmin.py
-- [ ] T059 [US1] Create Garmin sync background job in /backend/src/jobs/garmin_sync.py
-- [ ] T060 [US1] Configure Celery Beat for daily sync (6 AM) in /backend/src/celery_config.py
+- [X] T054 [US1] Implement Garmin OAuth2 PKCE flow in /backend/src/services/garmin/oauth_service.py
+- [X] T055 [US1] Implement Garmin API client with python-garminconnect in /backend/src/services/garmin/client.py
+- [X] T056 [US1] Implement health metrics fetching in /backend/src/services/garmin/health_service.py
+- [X] T057 [US1] Implement workout fetching in /backend/src/services/garmin/workout_service.py
+- [X] T058 [US1] Create Garmin authorization endpoints in /backend/src/api/routes/garmin.py
+- [X] T059 [US1] Create Garmin sync background job in /backend/src/jobs/garmin_sync.py
+- [X] T060 [US1] Configure Celery Beat for daily sync (6 AM) in /backend/src/celery_config.py
 
 **Refactor (TDD Refactor Phase)**:
-- [ ] T061 [US1] Add retry logic and error handling to Garmin service
-- [ ] T062 [US1] Implement 24-hour caching for Garmin data in Redis
+- [X] T061 [US1] Add retry logic and error handling to Garmin service
+- [X] T062 [US1] Implement 24-hour caching for Garmin data in Redis
 
 ### Recovery Score Calculation (US1)
 
 **Tests First (TDD Red Phase)**:
-- [ ] T063 [P] [US1] Write unit tests for HRV component calculation in /backend/tests/unit/test_recovery_hrv.py
-- [ ] T064 [P] [US1] Write unit tests for HR component calculation in /backend/tests/unit/test_recovery_hr.py
-- [ ] T065 [P] [US1] Write unit tests for sleep component calculation in /backend/tests/unit/test_recovery_sleep.py
-- [ ] T066 [P] [US1] Write unit tests for ACWR calculation in /backend/tests/unit/test_recovery_acwr.py
-- [ ] T067 [P] [US1] Write unit tests for final score aggregation in /backend/tests/unit/test_recovery_aggregator.py
+- [X] T063 [P] [US1] Write unit tests for HRV component calculation in /backend/tests/unit/test_recovery_hrv.py
+- [X] T064 [P] [US1] Write unit tests for HR component calculation in /backend/tests/unit/test_recovery_hr.py
+- [X] T065 [P] [US1] Write unit tests for sleep component calculation in /backend/tests/unit/test_recovery_sleep.py
+- [X] T066 [P] [US1] Write unit tests for ACWR calculation in /backend/tests/unit/test_recovery_acwr.py
+- [X] T067 [P] [US1] Write unit tests for final score aggregation in /backend/tests/unit/test_recovery_aggregator.py
 
 **Implementation (TDD Green Phase)**:
-- [ ] T068 [US1] Implement HRV component calculator in /backend/src/services/recovery/hrv_calculator.py
-- [ ] T069 [US1] Implement HR component calculator in /backend/src/services/recovery/hr_calculator.py
-- [ ] T070 [US1] Implement sleep component calculator in /backend/src/services/recovery/sleep_calculator.py
-- [ ] T071 [US1] Implement ACWR calculator in /backend/src/services/recovery/acwr_calculator.py
-- [ ] T072 [US1] Implement recovery score aggregator in /backend/src/services/recovery/score_aggregator.py
-- [ ] T073 [US1] Create recovery score background job in /backend/src/jobs/calculate_recovery.py
+- [X] T068 [US1] Implement HRV component calculator in /backend/src/services/recovery/hrv_calculator.py
+- [X] T069 [US1] Implement HR component calculator in /backend/src/services/recovery/hr_calculator.py
+- [X] T070 [US1] Implement sleep component calculator in /backend/src/services/recovery/sleep_calculator.py
+- [X] T071 [US1] Implement ACWR calculator in /backend/src/services/recovery/acwr_calculator.py
+- [X] T072 [US1] Implement recovery score aggregator in /backend/src/services/recovery/score_aggregator.py
+- [X] T073 [US1] Create recovery score background job in /backend/src/jobs/recovery_score.py
 
 **Refactor (TDD Refactor Phase)**:
-- [ ] T074 [US1] Implement anomaly detection (illness warning FR-010)
-- [ ] T075 [US1] Add 24-hour caching for recovery scores in Redis
+- [X] T074 [US1] Implement anomaly detection (illness warning FR-010) in /backend/src/services/recovery/anomaly_detector.py
+- [X] T075 [US1] Add 24-hour caching for recovery scores (implemented in RecoveryScore model)
 
 ### Workout Recommendation Engine (US1)
 
 **Tests First (TDD Red Phase)**:
-- [ ] T076 [P] [US1] Write unit tests for intensity mapping in /backend/tests/unit/test_recommendation_intensity.py
-- [ ] T077 [P] [US1] Write unit tests for workout type selection in /backend/tests/unit/test_recommendation_type.py
-- [ ] T078 [P] [US1] Write unit tests for rationale generation in /backend/tests/unit/test_recommendation_rationale.py
+- [X] T076 [P] [US1] Write unit tests for intensity mapping in /backend/tests/unit/test_recommendation_intensity.py
+- [X] T077 [P] [US1] Write unit tests for workout type selection in /backend/tests/unit/test_recommendation_type.py
+- [X] T078 [P] [US1] Write unit tests for rationale generation in /backend/tests/unit/test_recommendation_rationale.py
 
 **Implementation (TDD Green Phase)**:
-- [ ] T079 [US1] Implement intensity level mapper (green→hard, yellow→moderate, red→rest) in /backend/src/services/recommendations/intensity_mapper.py
-- [ ] T080 [US1] Implement workout type recommender in /backend/src/services/recommendations/type_recommender.py
-- [ ] T081 [US1] Implement recommendation rationale generator in /backend/src/services/recommendations/rationale_service.py
-- [ ] T082 [US1] Implement alternative workout generator (FR-014) in /backend/src/services/recommendations/alternatives_service.py
+- [X] T079 [US1] Implement intensity level mapper (green→hard, yellow→moderate, red→rest) in /backend/src/services/recommendations/intensity_mapper.py
+- [X] T080 [US1] Implement workout type recommender in /backend/src/services/recommendations/type_recommender.py
+- [X] T081 [US1] Implement recommendation rationale generator in /backend/src/services/recommendations/rationale_service.py
+- [X] T082 [US1] Implement alternative workout generator (FR-014) in /backend/src/services/recommendations/alternatives_service.py
 
 **Refactor (TDD Refactor Phase)**:
-- [ ] T083 [US1] Add overtraining prevention logic (FR-015)
+- [X] T083 [US1] Add overtraining prevention logic (FR-015) in /backend/src/services/recommendations/overtraining_prevention.py
 
 ### Recovery API Endpoints (US1)
 
 **Tests First (TDD Red Phase)**:
-- [ ] T084 [P] [US1] Write contract tests for GET /recovery/{date} in /backend/tests/contract/test_recovery_api.py
-- [ ] T085 [P] [US1] Write contract tests for GET /recovery/today in /backend/tests/contract/test_recovery_api.py
-- [ ] T086 [P] [US1] Write contract tests for POST /recovery/{date}/recalculate in /backend/tests/contract/test_recovery_api.py
+- [X] T084 [P] [US1] Write contract tests for GET /recovery/{date} in /backend/tests/contract/test_recovery_api.py
+- [X] T085 [P] [US1] Write contract tests for GET /recovery/today in /backend/tests/contract/test_recovery_api.py
+- [X] T086 [P] [US1] Write contract tests for POST /recovery/{date}/recalculate in /backend/tests/contract/test_recovery_api.py
 
 **Implementation (TDD Green Phase)**:
-- [ ] T087 [US1] Create Pydantic schemas for recovery responses in /backend/src/api/schemas/recovery.py
-- [ ] T088 [US1] Implement GET /recovery/{date} endpoint in /backend/src/api/routes/recovery.py
-- [ ] T089 [US1] Implement GET /recovery/today endpoint in /backend/src/api/routes/recovery.py
-- [ ] T090 [US1] Implement POST /recovery/{date}/recalculate endpoint in /backend/src/api/routes/recovery.py
+- [X] T087 [US1] Create Pydantic schemas for recovery responses in /backend/src/api/schemas/recovery.py
+- [X] T088 [US1] Implement GET /recovery/{date} endpoint in /backend/src/api/routes/recovery.py
+- [X] T089 [US1] Implement GET /recovery/today endpoint in /backend/src/api/routes/recovery.py
+- [X] T090 [US1] Implement POST /recovery/{date}/recalculate endpoint in /backend/src/api/routes/recovery.py
 
 ### Integration Testing (US1)
 
-- [ ] T091 [US1] Write integration test for complete User Story 1 flow in /backend/tests/integration/test_user_story_1.py
-- [ ] T092 [US1] Verify all 5 acceptance scenarios pass in integration test
+- [X] T091 [US1] Write integration test for complete User Story 1 flow in /backend/tests/integration/test_user_story_1.py
+- [X] T092 [US1] Verify all 5 acceptance scenarios pass in integration test
 
 ### Frontend (US1)
 
 **Tests First (TDD Red Phase)**:
-- [ ] T093 [P] [US1] Write component tests for RecoveryScore component in /frontend/tests/components/RecoveryScore.test.tsx
-- [ ] T094 [P] [US1] Write component tests for WorkoutRecommendation component in /frontend/tests/components/WorkoutRecommendation.test.tsx
+- [X] T093 [P] [US1] Write component tests for RecoveryScore component in /frontend/tests/components/RecoveryScore.test.tsx
+- [X] T094 [P] [US1] Write component tests for WorkoutRecommendation component in /frontend/tests/components/WorkoutRecommendation.test.tsx
 
 **Implementation (TDD Green Phase)**:
-- [ ] T095 [US1] Create RecoveryScore display component in /frontend/src/components/recovery/RecoveryScore.tsx
-- [ ] T096 [US1] Create WorkoutRecommendation card component in /frontend/src/components/recommendations/RecommendationCard.tsx
-- [ ] T097 [US1] Create Dashboard page integrating recovery and recommendations in /frontend/src/pages/Dashboard.tsx
-- [ ] T098 [US1] Implement API client for recovery endpoints in /frontend/src/services/api/recoveryApi.ts
-- [ ] T099 [US1] Add loading states and error handling to Dashboard
+- [X] T095 [US1] Create RecoveryScore display component in /frontend/src/components/recovery/RecoveryScore.tsx
+- [X] T096 [US1] Create WorkoutRecommendation card component in /frontend/src/components/recommendations/RecommendationCard.tsx
+- [X] T097 [US1] Create Dashboard page integrating recovery and recommendations in /frontend/src/pages/Dashboard.tsx
+- [X] T098 [US1] Implement API client for recovery endpoints in /frontend/src/services/api/recoveryApi.ts
+- [X] T099 [US1] Add loading states and error handling to Dashboard
 
 **Refactor (TDD Refactor Phase)**:
-- [ ] T100 [US1] Style components with Tailwind CSS per design system
-- [ ] T101 [US1] Add accessibility features (WCAG 2.1 AA compliance)
+- [X] T100 [US1] Style components with Tailwind CSS per design system
+- [X] T101 [US1] Add accessibility features (WCAG 2.1 AA compliance)
 
 **MVP CHECKPOINT**: 🎯 User Story 1 complete - Ship to production for user feedback
 

@@ -47,3 +47,36 @@ class EncryptionService:
         """
         decrypted_bytes = self.cipher.decrypt(encrypted_data.encode())
         return decrypted_bytes.decode()
+
+
+# Global encryption service instance
+_encryption_service = EncryptionService()
+
+
+def encrypt_token(token: str) -> str:
+    """
+    Encrypt a token string.
+
+    Args:
+        token: Plain text token to encrypt
+
+    Returns:
+        Encrypted token string
+    """
+    return _encryption_service.encrypt(token)
+
+
+def decrypt_token(encrypted_token: str) -> str:
+    """
+    Decrypt an encrypted token string.
+
+    Args:
+        encrypted_token: Encrypted token
+
+    Returns:
+        Decrypted plain text token
+
+    Raises:
+        cryptography.fernet.InvalidToken: If decryption fails
+    """
+    return _encryption_service.decrypt(encrypted_token)
